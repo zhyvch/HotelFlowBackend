@@ -10,10 +10,13 @@ ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS')
 
 LOCAL_APPS = [
     'src.apps.core.apps.CoreConfig',
+    'src.apps.common.apps.CommonConfig',
+    'src.apps.users.apps.UsersConfig',
 ]
 
 THIRD_PARTY_APPS = [
     'rest_framework',
+    'rest_framework_simplejwt',
     'corsheaders',
 ]
 
@@ -109,10 +112,18 @@ STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'static'
 
 
+AUTH_USER_MODEL = 'users.User'
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
     'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.AnonRateThrottle',
         'rest_framework.throttling.UserRateThrottle',
@@ -124,3 +135,5 @@ REST_FRAMEWORK = {
 }
 
 from src.config.settings.cors import *
+from src.config.settings.custom import *
+from src.config.settings.jwt import *
