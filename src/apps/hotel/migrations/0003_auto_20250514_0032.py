@@ -19,17 +19,44 @@ def create_test_categories(apps, schema_editor):
 def create_test_amenities(apps, schema_editor):
     Amenity = apps.get_model('hotel', 'Amenity')
     amenities = [
+        {'name': 'Alcohol friendly', 'description': 'Alcohol allowed in the room', 'icon': 'amenities/Alcohol_Friendly.png'},
+        {'name': 'Pet friendly', 'description': 'Complimentary breakfast included', 'icon': 'amenities/Pet_Friendly.png'},
         {'name': 'Wi-Fi', 'description': 'High-speed wireless internet'},
         {'name': 'Air Conditioning', 'description': 'Climate control system'},
         {'name': 'TV', 'description': '42-inch flat-screen TV'},
-        {'name': 'Mini Bar', 'description': 'Stocked refrigerator with beverages'},
-        {'name': 'Coffee Machine', 'description': 'Premium coffee maker'},
-        {'name': 'Safe', 'description': 'In-room electronic safe'},
         {'name': 'Bathtub', 'description': 'Luxury bathtub'},
         {'name': 'Balcony', 'description': 'Private balcony with view'},
     ]
     Amenity.objects.bulk_create([Amenity(**amenity) for amenity in amenities])
 
+
+def create_test_rooms(apps, schema_editor):
+    Room = apps.get_model('hotel', 'Room')
+    Category = apps.get_model('hotel', 'Category')
+    Amenity = apps.get_model('hotel', 'Amenity')
+    RoomAmenity = apps.get_model('hotel', 'RoomAmenity')
+    RoomImage = apps.get_model('hotel', 'RoomImage')
+
+    categories = list(Category.objects.all())
+    amenities = list(Amenity.objects.all())
+
+    for i in range(1, 4):
+        room = Room.objects.create(
+            title=f'Room {i}',
+            description=f'This is test room number {i}',
+            price_per_night=random.randint(50, 300),
+            status='free',
+            category=random.choice(categories)
+        )
+
+        selected_amenities = random.sample(amenities, random.randint(2, min(4, len(amenities))))
+        for amenity in selected_amenities:
+            RoomAmenity.objects.create(room=room, amenity=amenity)
+
+        file_name1 = f'room_images/room1.jpg'
+        file_name2 = f'room_images/room2.jpg'
+        room_image = RoomImage.objects.create(room=room, image=file_name1)
+        room_image2 = RoomImage.objects.create(room=room, image=file_name2)
 
 
 class Migration(migrations.Migration):
@@ -40,4 +67,5 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RunPython(create_test_categories),
         migrations.RunPython(create_test_amenities),
+        migrations.RunPython(create_test_rooms),
     ]

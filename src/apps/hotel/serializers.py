@@ -42,6 +42,7 @@ class RoomSerializer(serializers.ModelSerializer):
             'status',
             'category',
             'amenities',
+            'images'
         ]
         depth = 1
         extra_kwargs = {
@@ -155,6 +156,7 @@ class BookingSerializer(serializers.ModelSerializer):
                 )
 
         return instance
+
 
 class QRCodeSerializer(serializers.ModelSerializer):
     class Meta:

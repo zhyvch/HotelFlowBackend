@@ -332,4 +332,3 @@ class Review(TitledTimestampedBaseModel):
     class Meta:
         verbose_name = _('Review')
         verbose_name_plural = _('Reviews')
-
