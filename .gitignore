@@ -166,6 +166,7 @@ cython_debug/
 media/*
 static/*
 !media/.gitkeep
+!media/users/default_pfp.svg.png
 !static/.gitkeep
 .DS_Store
 

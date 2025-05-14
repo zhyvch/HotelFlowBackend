@@ -1,5 +1,3 @@
-import uuid
-
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser
@@ -37,6 +35,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         upload_to='users/',
         null=True,
         blank=True,
+        default='users/default_pfp.svg.png',
     )
     bonus_balance = models.DecimalField(
         verbose_name=_('Bonus balance'),
@@ -83,4 +82,3 @@ class User(AbstractBaseUser, PermissionsMixin):
     @property
     def email_username(self):
         return self.email[:self.email.index('@')]
-

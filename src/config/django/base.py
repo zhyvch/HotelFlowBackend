@@ -12,6 +12,8 @@ LOCAL_APPS = [
     'src.apps.core.apps.CoreConfig',
     'src.apps.common.apps.CommonConfig',
     'src.apps.users.apps.UsersConfig',
+    'src.apps.hotel.apps.HotelConfig',
+    'src.apps.employees.apps.EmployeesConfig',
 ]
 
 THIRD_PARTY_APPS = [
@@ -30,7 +32,6 @@ INSTALLED_APPS = [
     *THIRD_PARTY_APPS,
     *LOCAL_APPS,
 ]
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -111,6 +112,10 @@ STATIC_URL = 'static/'
 
 STATIC_ROOT = BASE_DIR / 'static'
 
+MEDIA_URL = 'media/'
+
+MEDIA_ROOT = BASE_DIR / 'media'
+
 
 AUTH_USER_MODEL = 'users.User'
 
@@ -122,7 +127,7 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
+        # 'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.AnonRateThrottle',
